@@ -1,28 +1,12 @@
-let isLandscape = ()=> {
-    return window.innerWidth > window.innerHeight
-}
-window.onload = ()=> validatePortrait();
-window.onresize = ()=> validatePortrait();
-let validatePortrait = ()=> {
-    forceLandscape.style.display = isLandscape()? 'none' : 'block'
-    gameContainer.style.display = isLandscape()? 'block' : 'none'
-}
-
-let gHeight = 720
-let gWidth = isLandscape()? 
-    Math.ceil(gHeight * (window.innerWidth / window.innerHeight)) :
-    Math.ceil(gHeight * (window.innerHeight / window.innerWidth))
-
+let gWidth = 352
+let gHeight = 224
 
 // --------------------- DEBUG TOOLS --------------------- 
-let debugMode = 1
+let debugMode = 0
 var gdv
-var gs
 
 if (debugMode) {
-    console.log("isLandscape", isLandscape())
-    console.log("gWidth", gWidth)
-    console.log("gHeight", gHeight)
+
 }
 
 // --------------------- GAME CONFIG --------------------- 
@@ -33,18 +17,25 @@ let gameConfig = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: gWidth,
-        height: gHeight
+        height: gHeight,
+        min: { width: gWidth, height: gHeight }
     },
     autoStart: false,
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            debug: debugMode,
             gravity: {y: 1}
         }
     },
     render: {
         antialias: false
+    },
+    callbacks: {
+        postBoot: (game)=> {
+            game.scale.displaySize.setSnap(gWidth/2, gHeight/2)
+            game.scale.refresh()
+        }
     }
 }
 
