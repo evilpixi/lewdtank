@@ -20,6 +20,10 @@ class BootScene extends Phaser.Scene
             spacing: 2
         })
         this.load.image("char", "assets/images/char.png")
+        this.load.spritesheet("generic-enemy", "assets/images/generic-enemy.png", {
+            frameWidth:16,
+            frameHeight: 16
+        })
         
         this.load.image("smoke", "assets/images/smoke.png")
         this.load.image("maplvl1", "assets/images/map-lvl1.png")
@@ -63,6 +67,17 @@ class BootScene extends Phaser.Scene
             frames: this.anims.generateFrameNumbers("tankturrent", {
                 start: 1,
                 end: 2
+            }),
+            frameRate: animRate,
+            repeat: -1
+        })
+
+        // --- enemy anims ---
+        this.anims.create({
+            key: "helidrone-fly",
+            frames: this.anims.generateFrameNumbers("generic-enemy", {
+                start: 0,
+                end: 0
             }),
             frameRate: animRate,
             repeat: -1

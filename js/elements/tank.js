@@ -4,7 +4,7 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
         
         this.scene = config.scene
         this.scene.add.existing(this)
-        this.scene.physics.add.existing(this);
+        this.scene.physics.add.existing(this)
 
         this.setCollideWorldBounds(true)
         this.body.allowGravity = false
@@ -45,7 +45,7 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
             gravityY: -300,
             frequency: 80
         })
-        gdv = this.smokeEmitter
+        gdv = this
 
         this.playAnimation("stand")
     }
