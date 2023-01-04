@@ -45,6 +45,6 @@ let game = new Phaser.Game(gameConfig)
 game.scene.add("BootScene", BootScene)
 game.scene.add("GameScene", GameScene)
 game.scene.add("LostScene", LostScene)
-game.scene.add("LostScene", WinScene)
+game.scene.add("WinScene", WinScene)
 
 game.scene.start("BootScene")
