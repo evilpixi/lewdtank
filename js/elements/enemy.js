@@ -8,8 +8,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.dropRate = 1
 
         this.setCollideWorldBounds(true)
-
-        //this
     }
 
     preUpdate(t, d) { super.preUpdate(t, d); this.update(t, d) }
@@ -18,8 +16,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     drop() {
-        if (Math.random() > this.dropRate) {
-            //drop!
+        if (Math.random() > 0.5) {
+            let drop = new Powerup(this.scene, this.x, this.y, Powerup.getRandomType())
         }
     }
 }
@@ -71,6 +69,7 @@ class Helidrone extends Enemy {
                 this.setTint(Phaser.Display.Color.GetColor(255, value, value));
             }
         });
+
         this.hp -= damage
 
         if (this.hp <= 0) {

@@ -11,7 +11,7 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
 
         // --- game data ---
         this.hp = 100
-        this.ammo = 20
+        this.ammo = 40
 
         this.x = gWidth/2
         this.y = gHeight - 9
@@ -45,6 +45,7 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
                 return
             }
             this.ammo--
+            this.scene.UITextAmmo.setText(`Ammo: ${this.ammo}`)
 
             let origin = this.turrent.getRightCenter()
 
@@ -103,11 +104,11 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
 
     getDamaged(damage)
     {
-        return
         this.hp -= damage
         if (this.hp <= 0) {
             this.scene.handleTankDeath()
         }
+        this.scene.UITextHP.setText(`HP: ${this.hp}`)
     }
 
     preUpdate(t, d)
@@ -116,9 +117,21 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
         this.update()
     }
 
-    shoot()
+    loot(powerup)
     {
+        if (powerup.type == "file")
+        this.scene.unlockGirl()
 
+        if (powerup.type == "repair") {
+            
+            this.hp = 100
+            this.scene.UITextHP.setText(`$HP: ${this.hp}`)
+        }
+
+        if (powerup.type == "ammo") {
+            this.ammo += 15
+            this.scene.UITextAmmo.setText(`Ammo: ${this.ammo}`)
+        }
     }
 
     update() {

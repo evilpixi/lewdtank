@@ -25,7 +25,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     
     hitEnemy(bullet, enemy)
     {
-        enemy.getHit(this.damage)
+        enemy.getHit(bullet.damage)
         bullet.destroy()
     }
 

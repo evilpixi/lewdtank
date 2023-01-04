@@ -40,9 +40,35 @@ class BootScene extends Phaser.Scene
             margin: 1,
             spacing: 2
         })
-        
+
+        // --- powerups ---
+        this.load.spritesheet("powerup-ammo", "assets/images/powerup-ammo.png", {
+            frameWidth: 16,
+            frameHeight: 16,
+            margin: 1,
+            spacing: 2
+        })
+        this.load.spritesheet("powerup-file", "assets/images/powerup-file.png", {
+            frameWidth: 16,
+            frameHeight: 16,
+            margin: 1,
+            spacing: 2
+        })
+        this.load.spritesheet("powerup-repair", "assets/images/powerup-repair.png", {
+            frameWidth: 16,
+            frameHeight: 16,
+            margin: 1,
+            spacing: 2
+        })
+
+
         this.load.image("smoke", "assets/images/smoke.png")
         this.load.image("maplvl1", "assets/images/map-lvl1.png")
+
+        for (let i = 1; i < 5; i++)
+        {
+            this.load.image("photo" + i, "assets/images/photo" + i + ".png")
+        }
     }
 
     create() 
@@ -117,6 +143,21 @@ class BootScene extends Phaser.Scene
             frameRate: animRate,
             repeat: -1
         })
+
+
+        // --- powerups ---
+        for (let pw of Powerup.types)
+        {
+            this.anims.create({
+                key: "powerup-" + pw,
+                frames: this.anims.generateFrameNumbers("powerup-" + pw, {
+                    start: 0,
+                    end: 1
+                }),
+                frameRate: animRate,
+                repeat: -1
+            })
+        }
 
 
         this.scene.start("GameScene")

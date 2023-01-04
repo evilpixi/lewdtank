@@ -25,7 +25,7 @@ let gameConfig = {
         default: 'arcade',
         arcade: {
             debug: debugMode,
-            gravity: {y: 1}
+            gravity: {y: 400}
         }
     },
     render: {
@@ -45,5 +45,6 @@ let game = new Phaser.Game(gameConfig)
 game.scene.add("BootScene", BootScene)
 game.scene.add("GameScene", GameScene)
 game.scene.add("LostScene", LostScene)
+game.scene.add("LostScene", WinScene)
 
 game.scene.start("BootScene")
