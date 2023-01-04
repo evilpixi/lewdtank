@@ -2,7 +2,7 @@ let gWidth = 352
 let gHeight = 224
 
 // --------------------- DEBUG TOOLS --------------------- 
-let debugMode = 0
+let debugMode = 1
 var gdv
 
 if (debugMode) {
@@ -11,7 +11,7 @@ if (debugMode) {
 
 // --------------------- GAME CONFIG --------------------- 
 let gameConfig = {
-    type: Phaser.CANVAS,
+    type: Phaser.WEBGL,
     scale: {
         parent: 'gameContainer',
         mode: Phaser.Scale.FIT,
@@ -44,5 +44,6 @@ let gameConfig = {
 let game = new Phaser.Game(gameConfig)
 game.scene.add("BootScene", BootScene)
 game.scene.add("GameScene", GameScene)
+game.scene.add("LostScene", LostScene)
 
 game.scene.start("BootScene")

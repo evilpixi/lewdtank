@@ -5,23 +5,28 @@ class GameScene extends Phaser.Scene {
 
     create() 
     {
+        this.enemyFactory = new EnemyFactory(this, 1)
+        
         this.add.image(0, 0, "maplvl1").setOrigin(0)
 
         this.tank = new Tank({scene: this, x: 0, y: 0})
 
-        this.enemy1 = new Helidrone(this, 100, 200)
-
         this.physics.add.overlap(this.tank, this.enemy1, this.winCallback)
+
+        if (debugMode)
+        {
+            this.debugText = this.add.text(4, 4, "debugText")
+            this.input.on("pointermove", (p)=> { this.debugText.setText(`${Math.floor(p.x)}x${Math.floor(p.y)}`)})
+        }
     }
     
-    winCallback(player, enemy)
+    handleTankDeath()
     {
-        console.log("enemy is", enemy)
-        console.log("player is", player)
+        this.scene.start("LostScene")
     }
 
-    update() 
+    update(t, d) 
     {
-        
+        this.enemyFactory.update(t, d)
     }
 }

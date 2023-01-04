@@ -9,6 +9,10 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true)
         this.body.allowGravity = false
 
+        // --- game data ---
+        this.hp = 100
+        this.ammo = 20
+
         this.x = gWidth/2
         this.y = gHeight - 9
 
@@ -33,6 +37,36 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
             this.aimingToCursor = true
         })
 
+        this.g = this.scene.add.graphics()
+
+        this.scene.input.on("pointerdown", (pointer)=> {
+            if (this.ammo <= 0) {
+                console.log("OUT OF AMMO")
+                return
+            }
+            this.ammo--
+
+            let origin = this.turrent.getRightCenter()
+
+            this.g.clear()
+            this.g.lineBetween(origin.x, origin.y, pointer.x, pointer.y)
+
+            let bulletSpeed = 100
+            let angle = Phaser.Math.Angle.Between(origin.x, origin.y, pointer.x, pointer.y)
+
+            let bullet = new Bullet(this.scene, origin.x, origin.y, {
+                texture: "bullet2",
+                source: "player",
+                speedX: bulletSpeed * Math.cos(angle),
+                speedY: bulletSpeed * Math.sin(angle),
+                damage: 50
+            })
+            let enemies = this.scene.enemyFactory.group
+            this.scene.physics.add.overlap(bullet, enemies, bullet.hitEnemy)
+        })
+
+        gdv = this.scene.physics
+
         // --- particles ---
         this.smokeEmitter = this.scene.add.particles("smoke").createEmitter({
             x: this.x,
@@ -45,7 +79,6 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
             gravityY: -300,
             frequency: 80
         })
-        gdv = this
 
         this.playAnimation("stand")
     }
@@ -68,10 +101,24 @@ class Tank extends Phaser.Physics.Arcade.Sprite {
         this.currentDirection = direction
     }
 
+    getDamaged(damage)
+    {
+        return
+        this.hp -= damage
+        if (this.hp <= 0) {
+            this.scene.handleTankDeath()
+        }
+    }
+
     preUpdate(t, d)
     {
         super.preUpdate(t, d)
         this.update()
+    }
+
+    shoot()
+    {
+
     }
 
     update() {
